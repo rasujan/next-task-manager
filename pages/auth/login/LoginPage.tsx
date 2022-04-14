@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { LoginForm } from "@/components/forms";
+import { useForm, Controller } from "react-hook-form";
 
-const LoginPage = () => {
+import type { NextPage } from "next";
+
+const LoginPage = (): NextPage => {
   const titleVariants = {
     hidden: { opacity: 0, x: "-50vh" },
     visible: {

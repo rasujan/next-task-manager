@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.8.8",
     "@mantine/core": "^4.1.2",
     "@mantine/hooks": "^4.1.2",
     "@mantine/modals": "^4.1.2",
@@ -24,7 +25,8 @@
     "react-hook-form": "^7.29.0",
     "react-icons": "^4.3.1",
     "react-query": "^3.34.19",
-    "react-redux": "^7.2.8"
+    "react-redux": "^7.2.8",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.1.4",
