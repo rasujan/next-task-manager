@@ -4,14 +4,14 @@
 
 @layer base {
   h1 {
-    @apply text-3xl text-gray-800;
+    @apply text-3xl text-gray-800 dark:text-gray-200;
   }
 
   h2 {
-    @apply text-2xl text-gray-800;
+    @apply text-2xl text-gray-800 dark:text-gray-200;
   }
 
   h3 {
-    @apply text-xl text-gray-700;
+    @apply text-xl text-gray-700 dark:text-gray-200;
   }
 }

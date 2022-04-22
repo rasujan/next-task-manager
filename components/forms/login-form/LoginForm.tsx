@@ -2,10 +2,13 @@ import React from "react";
 import { TextInput, Button, PasswordInput } from "@mantine/core";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Cookies from "js-cookie";
 
 import schema from "./validation";
 
 const LoginForm = () => {
+  const isDarkMode = !!(Cookies.get("darkMode") === "true");
+
   const { control, handleSubmit, formState } = useForm({
     resolver: yupResolver(schema),
   });
@@ -35,6 +38,9 @@ const LoginForm = () => {
                 radius="sm"
                 ref={field.ref}
                 id="username"
+                classNames={{
+                  label: "dark:text-gray-200",
+                }}
               />
             )}
           />
@@ -49,6 +55,9 @@ const LoginForm = () => {
                 label="Password"
                 radius="sm"
                 id="password"
+                classNames={{
+                  label: "dark:text-gray-200",
+                }}
               />
             )}
           />
@@ -58,7 +67,7 @@ const LoginForm = () => {
           type="submit"
           radius="sm"
           variant="outline"
-          color="dark"
+          color={isDarkMode ? "yellow" : "dark"}
           fullWidth
           uppercase
           disabled={!formState.isValid && formState.isSubmitted}

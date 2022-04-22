@@ -4,6 +4,6 @@
 
 @layer components {
   .card {
-    @apply bg-white rounded-lg shadow-2xl self-center  md:mx-4 p-8 my-2 w-full  md:w-1/3  lg:w-1/2;
+    @apply bg-white rounded-lg shadow-2xl self-center  md:mx-4 p-8 my-2 w-full  md:w-1/3  lg:w-1/2 dark:shadow-orange-200 dark:bg-slate-900;
   }
 }
