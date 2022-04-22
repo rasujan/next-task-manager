@@ -4,10 +4,17 @@ import Cookies from "js-cookie";
 import { motion } from "framer-motion";
 import { LoginForm } from "@/components/forms";
 import { useForm, Controller } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { Button, Switch } from "@mantine/core";
+
 import Layout from "@/components/layout/Layout";
+import { AUTH_ACTIONS } from "../actions";
+import { postRequest } from "store/Actions";
+import { loginFieldsType } from "../types";
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
+
   const titleVariants = {
     hidden: { opacity: 0, x: "-50vh" },
     visible: {
@@ -46,6 +53,25 @@ const LoginPage = () => {
     }
   }, [darkMode]);
 
+  const handleLogin = async (values: loginFieldsType) => {
+    const { login } = AUTH_ACTIONS;
+    const { url, asyncActions } = login();
+
+    const postData = {
+      username: values.username,
+      password: values.password,
+    };
+
+    const actionProperties = await dispatch(
+      postRequest(asyncActions, url, postData)
+    );
+
+    console.log(
+      "🚀 ~ file: LoginPage.tsx ~ line 70 ~ handleLogin ~ actionProperties",
+      actionProperties
+    );
+  };
+
   return (
     <Layout>
       <div className="container mx-auto ">
@@ -72,7 +98,7 @@ const LoginPage = () => {
             className="card"
           >
             <motion.h1>
-              <LoginForm />
+              <LoginForm onSubmit={handleLogin} />
             </motion.h1>
           </motion.div>
         </div>

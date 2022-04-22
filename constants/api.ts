@@ -1,7 +1,6 @@
 /* eslint no-useless-catch: "off" */
-import axios from "axios";
+import { instance as axios } from "./axios-setup";
 
-axios.defaults.baseURL = `${process.env.REACT_APP_API_ENDPOINT}/api/v1`;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 export default class CMSApi {
@@ -22,7 +21,7 @@ export default class CMSApi {
     }
   };
 
-  post = async (url: string, postData: object, token: string) => {
+  post = async (url: string, postData: object, token?: string) => {
     const finalConfig = {
       ...{},
       headers: {

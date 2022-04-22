@@ -67,32 +67,32 @@ function getRequest(
 }
 
 function postRequest(
-  asyncActions: undefined,
+  asyncActions: object | undefined,
   url: string,
   postData: object,
-  extraProps: object
+  extraProps?: object
 ) {
   return async (
-    dispatch: (arg0: { type: any; payload?: object }) => void,
-    getState: () => {
+    dispatch: (arg0: { type: any; payload?: object }) => void
+    /*   getState: () => {
       user: {
         userResponse: {
           authToken?: "" | undefined;
           email?: "" | undefined;
         };
       };
-    }
+    } */
   ) => {
-    const {
+    /*   const {
       user: {
         userResponse: { authToken = "" },
       },
-    } = getState();
+    } = getState(); */
 
     dispatch(onInit(asyncActions));
 
     try {
-      const result = await AppApi.post(url, postData, authToken);
+      const result = await AppApi.post(url, postData);
 
       return dispatch(onSuccess(asyncActions, result, extraProps));
     } catch (error) {
@@ -108,14 +108,13 @@ function putRequest(asyncActions: undefined, url: string, postData: object) {
       user: {
         userResponse: {
           authToken?: "" | undefined;
-          email?: "" | undefined;
         };
       };
     }
   ) => {
     const {
       user: {
-        userResponse: { authToken = "", email = "" },
+        userResponse: { authToken = "" },
       },
     } = getState();
 
@@ -143,7 +142,6 @@ function patchRequest(
       user: {
         userResponse: {
           authToken?: "" | undefined;
-          email?: "" | undefined;
         };
       };
     }
@@ -177,7 +175,6 @@ function deleteRequest(
       user: {
         userResponse: {
           authToken?: "" | undefined;
-          email?: "" | undefined;
         };
       };
     }

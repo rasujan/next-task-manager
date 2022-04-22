@@ -6,21 +6,25 @@ import Cookies from "js-cookie";
 
 import schema from "./validation";
 
-const LoginForm = () => {
+interface propsType {
+  onSubmit: any;
+}
+
+const LoginForm = ({ onSubmit }: propsType) => {
   const isDarkMode = !!(Cookies.get("darkMode") === "true");
 
   const { control, handleSubmit, formState } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (values: any) => {
+  /*   const onSubmit2 = (values: any) => {
     return new Promise((resolve) => {
       setTimeout(() => {
         alert(JSON.stringify(values, null, 2));
         resolve(values);
       }, 1000);
     });
-  };
+  }; */
 
   return (
     <div>
@@ -33,6 +37,7 @@ const LoginForm = () => {
             render={({ field, fieldState }) => (
               <TextInput
                 value={field.value}
+                onChange={field.onChange}
                 error={fieldState.error?.message}
                 label="Username"
                 radius="sm"
@@ -51,6 +56,7 @@ const LoginForm = () => {
             render={({ field, fieldState }) => (
               <PasswordInput
                 value={field.value}
+                onChange={field.onChange}
                 error={fieldState.error?.message}
                 label="Password"
                 radius="sm"

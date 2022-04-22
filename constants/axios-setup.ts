@@ -16,3 +16,8 @@ export function setupAxios(store: any) {
     return Promise.reject(error);
   });
 }
+
+export const instance = axios.create({
+  baseURL: `${process.env.NEXT_PUBLIC_REACT_APP_API_ENDPOINT}`,
+  headers: { "X-Custom-Header": "foobar" },
+});
