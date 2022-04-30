@@ -11,6 +11,7 @@ export function setupAxios(store: any) {
     if (Number(statusCode) === 401) {
       //   store.dispatch({ type: logout });
       //   import { useRouter } from "next/router";
+      window.location.href = "/";
     }
 
     return Promise.reject(error);

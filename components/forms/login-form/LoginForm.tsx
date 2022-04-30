@@ -73,7 +73,7 @@ const LoginForm = ({ onSubmit }: propsType) => {
           type="submit"
           radius="sm"
           variant="outline"
-          color={isDarkMode ? "yellow" : "dark"}
+          // color={isDarkMode ? "yellow" : "dark"}
           fullWidth
           uppercase
           disabled={!formState.isValid && formState.isSubmitted}
