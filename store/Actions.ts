@@ -72,17 +72,7 @@ function postRequest(
   postData: object,
   extraProps?: object
 ) {
-  return async (
-    dispatch: (arg0: { type: any; payload?: object }) => void
-    /*   getState: () => {
-      user: {
-        userResponse: {
-          authToken?: "" | undefined;
-          email?: "" | undefined;
-        };
-      };
-    } */
-  ) => {
+  return async (dispatch: any) => {
     /*   const {
       user: {
         userResponse: { authToken = "" },

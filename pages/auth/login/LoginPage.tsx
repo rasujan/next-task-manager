@@ -4,16 +4,17 @@ import Cookies from "js-cookie";
 import { motion } from "framer-motion";
 import { LoginForm } from "@/components/forms";
 import { useForm, Controller } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import { Button, Switch } from "@mantine/core";
+import moment from "moment";
 
 import Layout from "@/components/layout/Layout";
 import { AUTH_ACTIONS } from "../actions";
 import { postRequest } from "store/Actions";
 import { loginFieldsType } from "../types";
+import { useAppDispatch } from "store/hooks";
 
 const LoginPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const titleVariants = {
     hidden: { opacity: 0, x: "-50vh" },
@@ -62,14 +63,11 @@ const LoginPage = () => {
       password: values.password,
     };
 
-    const actionProperties = await dispatch(
-      postRequest(asyncActions, url, postData)
-    );
+    const res = dispatch(postRequest(asyncActions, url, postData));
 
-    console.log(
-      "🚀 ~ file: LoginPage.tsx ~ line 70 ~ handleLogin ~ actionProperties",
-      actionProperties
-    );
+    if (res.type === asyncActions.success) {
+      Cookies.set("authToken", res.payload?.accessToken);
+    }
   };
 
   return (
