@@ -3,12 +3,23 @@ import "../styles/styles.scss";
 
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
+import { QueryClient, QueryClientProvider } from "react-query";
+
 import store from "store/Store";
 
+import { setupAxios } from "constants/axios-setup";
+
+setupAxios(store);
+
 function MyApp({ Component, pageProps }: AppProps) {
+  // Create a client
+  const queryClient = new QueryClient();
+
   return (
     <Provider store={store}>
-      <Component {...pageProps} />
+      <QueryClientProvider client={queryClient}>
+        <Component {...pageProps} />
+      </QueryClientProvider>
     </Provider>
   );
 }

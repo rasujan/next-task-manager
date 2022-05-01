@@ -8,3 +8,6 @@ export const AUTH_ACTIONS = {
     },
   }),
 };
+
+export const setTheme = "@SET_THEME";
+export const toggleTheme = "@TOGGLE_THEME";

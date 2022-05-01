@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import classNames from "classnames";
-import Cookies from "js-cookie";
+
+import { useAppSelector } from "store/hooks";
 
 const Layout = (props: { children: any }) => {
   const { children } = props;
 
+  const { darkMode } = useAppSelector((state) => state.auth);
+
   return (
     <main
       className={classNames({
-        dark: Cookies.get("darkMode") === "true",
+        dark: darkMode,
       })}
     >
       <div className="min-h-screen bg-slate-50 dark:bg-slate-800">
-        {children}
+        <div className="container mx-auto ">{children}</div>
       </div>
     </main>
   );

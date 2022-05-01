@@ -1,14 +1,17 @@
 /* eslint no-useless-catch: "off" */
 import { instance as axios } from "./axios-setup";
+import Cookies from "js-cookie";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 export default class CMSApi {
+  cookieToken = Cookies.get("authToken");
+
   get = async (url: string, token: string) => {
     const finalConfig = {
       ...{},
       headers: {
-        "X-User-Token": token || "",
+        Authorization: `Bearer ${this.cookieToken || token || ""}`,
       },
     };
 
@@ -25,7 +28,7 @@ export default class CMSApi {
     const finalConfig = {
       ...{},
       headers: {
-        "X-User-Token": token || "",
+        Authorization: `Bearer ${this.cookieToken || token || ""}`,
       },
     };
 
