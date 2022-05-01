@@ -41,23 +41,23 @@ function getRequest(
   return async (
     dispatch: (arg0: { type: any; payload?: object }) => void,
     getState: () => {
-      user: {
-        userResponse: {
-          authToken?: "" | undefined;
+      auth: {
+        user: {
+          accessToken?: "";
         };
       };
     }
   ) => {
     const {
-      user: {
-        userResponse: { authToken = "" },
+      auth: {
+        user: { accessToken = "" },
       },
     } = getState();
 
     dispatch(onInit(asyncActions));
 
     try {
-      const result = await AppApi.get(url, authToken);
+      const result = await AppApi.get(url, accessToken);
 
       return dispatch(onSuccess(asyncActions, result, extraProps));
     } catch (error) {

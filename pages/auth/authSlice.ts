@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AUTH_ACTIONS } from "./actions";
+
+import { AUTH_ACTIONS, toggleTheme, setTheme } from "./actions";
 
 const { login } = AUTH_ACTIONS;
 
@@ -11,12 +12,14 @@ type InitialState = {
   loading: boolean;
   user: object;
   error: string;
+  darkMode: boolean;
 };
 
 const initialState: InitialState = {
   loading: false,
   user: {},
   error: "",
+  darkMode: false,
 };
 
 export const authSlice = createSlice({
@@ -37,6 +40,12 @@ export const authSlice = createSlice({
       state.user = {};
       state.error =
         action.error?.response?.data.message || "something went wrong";
+    });
+    builder.addCase(toggleTheme, (state) => {
+      state.darkMode = !state.darkMode;
+    });
+    builder.addCase(setTheme, (state, action: any) => {
+      state.darkMode = !!action.payload;
     });
   },
 });
