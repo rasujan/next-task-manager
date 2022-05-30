@@ -28,7 +28,7 @@ const TaskPage = () => {
 
   useQuery("Task", handleFetchTasks);
 
-  const { tasks: taskList }: { tasks: Array<Task> } = useAppSelector(
+  const { tasks: taskList }: { tasks: Array<Task> | null } = useAppSelector(
     (state) => state.tasks
   );
 
@@ -37,22 +37,23 @@ const TaskPage = () => {
       <Header />
       <div className="flex justify-center">
         <React.Fragment>
-          {isArray(taskList) && (
+          {taskList && (
             <motion.div
               variants={cardVariants}
               initial="hidden"
               animate="show"
               className="card"
             >
-              {taskList.map((task) => (
-                <motion.div
-                  variants={tileVariants}
-                  key={task.id}
-                  whileHover={{ scale: 1.02 }}
-                >
-                  <TaskTile task={task} />
-                </motion.div>
-              ))}
+              {isArray(taskList) &&
+                taskList.map((task) => (
+                  <motion.div
+                    variants={tileVariants}
+                    key={task.id}
+                    whileHover={{ scale: 1.02 }}
+                  >
+                    <TaskTile task={task} />
+                  </motion.div>
+                ))}
             </motion.div>
           )}
         </React.Fragment>
@@ -62,3 +63,5 @@ const TaskPage = () => {
 };
 
 export default TaskPage;
+
+// test it will do gcmsg

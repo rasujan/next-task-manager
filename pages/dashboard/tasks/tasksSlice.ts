@@ -14,13 +14,13 @@ const {
 
 type InitialStateType = {
   loading: boolean;
-  tasks: Array<Task> | [];
+  tasks: Array<Task> | [] | null;
   error: string;
 };
 
 const initialState: InitialStateType = {
   loading: false,
-  tasks: [],
+  tasks: null,
   error: "",
 };
 
