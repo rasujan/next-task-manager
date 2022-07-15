@@ -6,7 +6,7 @@ export const cardVariants = {
     transition: {
       type: "spring",
       duration: 1,
-      delayChildren: 0.5,
+      delayChildren: 0.25,
       staggerChildren: 0.25,
       when: "beforeChildren",
     },

@@ -13,35 +13,26 @@ const {
 } = fetchTasks();
 
 type InitialStateType = {
-  loading: boolean;
   tasks: Array<Task> | [] | null;
-  error: string;
 };
 
 const initialState: InitialStateType = {
-  loading: false,
   tasks: null,
-  error: "",
 };
 
 export const authSlice = createSlice({
-  name: "auth",
+  name: "TaskList",
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchTasksInit, (state) => {
-      state.loading = true;
+      state.tasks = null;
     });
     builder.addCase(fetchTasksSuccess, (state, action: PayloadAction<[]>) => {
-      state.loading = false;
       state.tasks = action.payload;
-      state.error = "";
     });
-    builder.addCase(fetchTasksError, (state, action: any) => {
-      state.loading = false;
+    builder.addCase(fetchTasksError, (state) => {
       state.tasks = [];
-      state.error =
-        action.error?.response?.data.message || "something went wrong";
     });
   },
 });
