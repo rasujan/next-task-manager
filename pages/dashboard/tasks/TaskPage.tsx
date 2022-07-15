@@ -38,12 +38,11 @@ const TaskPage = () => {
       <Header />
 
       {isFetching ? (
-        <>
-          <Skeleton mb="xl" />
-          <Skeleton height={24} radius="xl" />
-          <Skeleton height={24} mt={6} radius="xl" />
-          <Skeleton height={24} mt={6} width="70%" radius="xl" />
-        </>
+        <div className="max-w-lg">
+          <Skeleton height={36} />
+          <Skeleton height={36} mt={6} />
+          <Skeleton height={36} mt={6} />
+        </div>
       ) : (
         <React.Fragment>
           {taskList && isArray(taskList) && (
