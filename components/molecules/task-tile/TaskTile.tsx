@@ -10,12 +10,15 @@ const TaskTile = (props: PropType) => {
   return (
     <div className="task-tile justify-between" role="button">
       <div>
-        <h2>{task.title} </h2>
+        <h3>{task.title} </h3>
 
         <p> {task.description}</p>
       </div>
       <div className="flex ">
-        <h2 className="self-center"> {task.status}</h2>
+        <h5 className="self-center">
+          {" "}
+          Status: <b>{task.status}</b>
+        </h5>
       </div>
     </div>
   );

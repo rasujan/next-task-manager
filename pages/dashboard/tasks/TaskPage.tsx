@@ -2,10 +2,11 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useQuery } from "react-query";
 import { isArray } from "lodash";
+import { TaskTile } from "@/components/molecules";
+import { Skeleton } from "@mantine/core";
 
 import Layout from "@/components/organism/layout/Layout";
 import { Header } from "@/components/organism/header";
-import { TaskTile } from "@/components/molecules";
 
 import { tileVariants, cardVariants } from "./animation";
 import { TASK_LIST_ACTIONS } from "./actions";
@@ -26,7 +27,7 @@ const TaskPage = () => {
     return res.payload;
   };
 
-  useQuery("Task", handleFetchTasks);
+  const { isFetching } = useQuery("fetchTask", handleFetchTasks);
 
   const { tasks: taskList }: { tasks: Array<Task> | null } = useAppSelector(
     (state) => state.tasks
@@ -35,35 +36,38 @@ const TaskPage = () => {
   return (
     <Layout>
       <Header />
-      <div className="flex justify-center">
+
+      {isFetching ? (
+        <>
+          <Skeleton mb="xl" />
+          <Skeleton height={24} radius="xl" />
+          <Skeleton height={24} mt={6} radius="xl" />
+          <Skeleton height={24} mt={6} width="70%" radius="xl" />
+        </>
+      ) : (
         <React.Fragment>
-          {taskList && (
-            <motion.div
+          {taskList && isArray(taskList) && (
+            <motion.ul
+              className="max-w-lg"
               variants={cardVariants}
               initial="hidden"
               animate="show"
-              className="card"
             >
-              {isArray(taskList) &&
-                taskList.map((task) => (
-                  <motion.div
-                    variants={tileVariants}
-                    key={task.id}
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <TaskTile task={task} />
-                  </motion.div>
-                ))}
-            </motion.div>
+              {taskList.map((task) => (
+                <motion.li
+                  variants={tileVariants}
+                  key={task.id}
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <TaskTile task={task} />
+                </motion.li>
+              ))}
+            </motion.ul>
           )}
         </React.Fragment>
-      </div>
+      )}
     </Layout>
   );
 };
 
 export default TaskPage;
-
-// test it will do gcmsg
-
-// now i will do gcam
