@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { isArray } from "lodash";
 import { TaskTile } from "@/components/molecules";
 import { Skeleton } from "@mantine/core";
@@ -10,61 +10,88 @@ import { Header } from "@/components/organism/header";
 
 import { tileVariants, cardVariants } from "./animation";
 import { TASK_LIST_ACTIONS } from "./actions";
-import { getRequest } from "store/Actions";
+import { getRequest, postRequest } from "store/Actions";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 
 import { Task } from "@/types/task";
+import {
+  AddTaskForm,
+  AddTask,
+} from "@/components/organism/forms/add-task-form";
 
 const TaskPage = () => {
   const dispatch = useAppDispatch();
+  const { fetchTasks, addTask } = TASK_LIST_ACTIONS;
 
   const handleFetchTasks = async () => {
-    const { fetchTasks } = TASK_LIST_ACTIONS;
     const { url, asyncActions } = fetchTasks();
 
-    const res: object | any = await dispatch(getRequest(asyncActions, url));
-
-    return res.payload;
+    dispatch(getRequest(asyncActions, url));
   };
 
-  const { isFetching } = useQuery("fetchTask", handleFetchTasks);
+  const { isLoading: fetchingTasks, refetch } = useQuery(
+    "fetchTask",
+    handleFetchTasks
+  );
 
   const { tasks: taskList }: { tasks: Array<Task> | null } = useAppSelector(
     (state) => state.tasks
   );
 
+  const handleAddTask = async (values: AddTask) => {
+    const { url, asyncActions } = addTask();
+    const postData = {
+      title: values?.title,
+      description: values?.description,
+    };
+
+    await dispatch(postRequest(asyncActions, url, postData));
+    refetch();
+  };
+
+  const { mutate, isLoading } = useMutation(handleAddTask);
+
   return (
     <Layout>
       <Header />
 
-      {isFetching ? (
-        <div className="max-w-lg">
-          <Skeleton height={36} />
-          <Skeleton height={36} mt={6} />
-          <Skeleton height={36} mt={6} />
-        </div>
-      ) : (
-        <React.Fragment>
-          {taskList && isArray(taskList) && (
-            <motion.ul
-              className="max-w-lg"
-              variants={cardVariants}
-              initial="hidden"
-              animate="show"
-            >
-              {taskList.map((task) => (
-                <motion.li
-                  variants={tileVariants}
-                  key={task.id}
-                  whileHover={{ scale: 1.02 }}
+      <section className="grid grid-cols-2 gap-4">
+        <div>
+          {fetchingTasks ? (
+            <div>
+              <Skeleton height={36} />
+              <Skeleton height={36} mt={6} />
+              <Skeleton height={36} mt={6} />
+            </div>
+          ) : (
+            <React.Fragment>
+              <h3> Tasks </h3>
+              {taskList && isArray(taskList) && (
+                <motion.ul
+                  variants={cardVariants}
+                  initial="hidden"
+                  animate="show"
                 >
-                  <TaskTile task={task} />
-                </motion.li>
-              ))}
-            </motion.ul>
+                  {taskList.map((task) => (
+                    <motion.li
+                      variants={tileVariants}
+                      key={task.id}
+                      whileHover={{ scale: 1.02 }}
+                    >
+                      <TaskTile task={task} />
+                    </motion.li>
+                  ))}
+                </motion.ul>
+              )}
+            </React.Fragment>
           )}
-        </React.Fragment>
-      )}
+        </div>
+
+        <div>
+          <h3> Add New Task </h3>
+          <AddTaskForm onSubmit={mutate} {...{ isLoading }} />
+        </div>
+      </section>
     </Layout>
   );
 };

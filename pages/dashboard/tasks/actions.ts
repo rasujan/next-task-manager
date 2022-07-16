@@ -9,4 +9,15 @@ export const TASK_LIST_ACTIONS = {
       },
     };
   },
+
+  addTask: () => {
+    return {
+      url: "/tasks",
+      asyncActions: {
+        init: "@ADD_TASK/INIT",
+        success: "@ADD_TASK/SUCCESS",
+        error: "@ADD_TASK/ERROR",
+      },
+    };
+  },
 };

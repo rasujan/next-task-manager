@@ -1,5 +1,5 @@
 import React from "react";
-import { TextInput, Button, PasswordInput } from "@mantine/core";
+import { TextInput, Textarea, Button } from "@mantine/core";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -7,47 +7,46 @@ import schema from "./validation";
 
 interface propsType {
   onSubmit: (any) => any;
+  isLoading: boolean;
 }
 
-const LoginForm = ({ onSubmit }: propsType) => {
-  const { control, handleSubmit, formState } = useForm({
+const AddTaskForm = ({ onSubmit, isLoading }: propsType) => {
+  const { control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
   });
 
   return (
     <div>
-      <h3 className="text-center"> Login </h3>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="my-4">
           <Controller
-            name="username"
+            name="title"
             control={control}
             render={({ field, fieldState }) => (
               <TextInput
                 value={field.value}
                 onChange={field.onChange}
                 error={fieldState.error?.message}
-                label="Username"
+                label="Title"
                 radius="sm"
                 ref={field.ref}
-                id="username"
-                className="my-2"
+                id="title"
               />
             )}
           />
 
           <Controller
-            name="password"
+            name="description"
             control={control}
             render={({ field, fieldState }) => (
-              <PasswordInput
+              <Textarea
                 value={field.value}
                 onChange={field.onChange}
                 error={fieldState.error?.message}
-                label="Password"
+                label="Description"
                 radius="sm"
-                id="password"
-                className="my-2"
+                ref={field.ref}
+                id="description"
               />
             )}
           />
@@ -59,13 +58,13 @@ const LoginForm = ({ onSubmit }: propsType) => {
           variant="outline"
           fullWidth
           uppercase
-          disabled={!formState.isValid && formState.isSubmitted}
+          loading={isLoading}
         >
-          Login
+          Add Task
         </Button>
       </form>
     </div>
   );
 };
 
-export default LoginForm;
+export default AddTaskForm;
