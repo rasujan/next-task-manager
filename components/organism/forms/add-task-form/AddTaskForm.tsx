@@ -18,7 +18,7 @@ const AddTaskForm = ({ onSubmit, isLoading }: propsType) => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="my-4">
+        <div className="my-2">
           <Controller
             name="title"
             control={control}

@@ -40,7 +40,7 @@ const Header = () => {
       initial="hidden"
       animate="visible"
       variants={titleVariants}
-      className="px-4 py-2 mb-8 rounded-lg shadow-lg flex justify-between dark:shadow-orange-200 dark:bg-slate-900"
+      className="px-4 py-2 mb-8 rounded-lg shadow-md flex justify-between dark:shadow-orange-200 dark:bg-slate-800"
     >
       <span>@rasujan - Task Manager</span>
 

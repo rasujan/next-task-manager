@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useMutation, useQuery } from "react-query";
 import { isArray } from "lodash";
 import { TaskTile } from "@/components/molecules";
 import { Skeleton } from "@mantine/core";
-import {orderBy} from "lodash"
+import { orderBy } from "lodash";
 
 import Layout from "@/components/organism/layout/Layout";
 import { Header } from "@/components/organism/header";
@@ -14,15 +14,24 @@ import { TASK_LIST_ACTIONS } from "./actions";
 import { getRequest, postRequest } from "store/Actions";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 
-import { Task } from "@/types/task";
 import {
   AddTaskForm,
   AddTask,
 } from "@/components/organism/forms/add-task-form";
+import TaskDetail from "@/components/organism/task-detail/TaskDetail";
+
+import { Task } from "@/types/task";
 
 const TaskPage = () => {
   const dispatch = useAppDispatch();
-  const { fetchTasks, addTask } = TASK_LIST_ACTIONS;
+  const { fetchTasks, addTask, fetchTaskDetail } = TASK_LIST_ACTIONS;
+
+  const { tasks: taskList }: { tasks: Array<Task> | null } = useAppSelector(
+    (state) => state.tasks
+  );
+  const [currentTask, setCurrentTask] = useState(
+    orderBy(taskList, ["id"], ["desc"])[0]
+  );
 
   const handleFetchTasks = async () => {
     const { url, asyncActions } = fetchTasks();
@@ -33,10 +42,6 @@ const TaskPage = () => {
   const { isLoading: fetchingTasks, refetch } = useQuery(
     "fetchTask",
     handleFetchTasks
-  );
-
-  const { tasks: taskList }: { tasks: Array<Task> | null } = useAppSelector(
-    (state) => state.tasks
   );
 
   const handleAddTask = async (values: AddTask) => {
@@ -52,12 +57,30 @@ const TaskPage = () => {
 
   const { mutate, isLoading } = useMutation(handleAddTask);
 
+  const handleFetchTaskDetail = (id: string | number) => {
+    const { url, asyncActions } = fetchTaskDetail(id);
+
+    dispatch(getRequest(asyncActions, url));
+  };
+
+  const { refetch: refetchTaskDetail } = useQuery(
+    ["fetchTaskDetail"],
+    () => handleFetchTaskDetail(currentTask.id),
+    {
+      enabled: false,
+    }
+  );
+
+  useEffect(() => {
+    refetchTaskDetail();
+  }, [currentTask, refetchTaskDetail]);
+
   return (
     <Layout>
       <Header />
 
       <section className="flex items-start ">
-        <div className="h-screen w-1/3">
+        <div className="w-1/2">
           {fetchingTasks ? (
             <div>
               <Skeleton height={36} />
@@ -68,27 +91,36 @@ const TaskPage = () => {
             </div>
           ) : (
             <React.Fragment>
-              <h3> Tasks </h3>
               {taskList && isArray(taskList) && (
                 <motion.ul
                   variants={cardVariants}
                   initial="hidden"
                   animate="show"
-                  className="h-5/6 overflow-y-auto overflow-x-hidden p-4"
+                  className="h-[80vh] overflow-y-auto overflow-x-hidden px-4"
                 >
-                  {orderBy(taskList, ["id"], ['desc']).map((task) => (
+                  {orderBy(taskList, ["id"], ["desc"]).map((task) => (
                     <motion.li
                       variants={tileVariants}
                       key={task.id}
                       whileHover={{ scale: 1.02 }}
                     >
-                      <TaskTile task={task} />
+                      <TaskTile
+                        task={task}
+                        onClick={(val) => {
+                          setCurrentTask(val);
+                        }}
+                      />
                     </motion.li>
                   ))}
                 </motion.ul>
               )}
             </React.Fragment>
           )}
+        </div>
+
+        <div className="card ">
+          <h3> Task Detail </h3>
+          <TaskDetail />
         </div>
 
         <div className="card ">

@@ -14,8 +14,8 @@ const Layout = (props: { children: any }) => {
         dark: darkMode,
       })}
     >
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-800">
-        <div className="container mx-auto ">{children}</div>
+      <div className="min-h-screen max-h-screen bg-slate-50 dark:bg-slate-800 scroll-smooth">
+        <div className="container  mx-auto ">{children}</div>
       </div>
     </main>
   );

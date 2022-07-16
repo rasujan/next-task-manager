@@ -3,12 +3,19 @@ import { Task } from "@/types/task";
 
 interface PropType {
   task: Task;
+  onClick: (any) => any;
 }
 
 const TaskTile = (props: PropType) => {
-  const { task } = props;
+  const { task, onClick } = props;
   return (
-    <div className="task-tile justify-between" role="button">
+    <div
+      className="task-tile justify-between"
+      aria-label="TaskTile"
+      role="button"
+      onClick={() => onClick(task)}
+      aria-hidden
+    >
       <div>
         <h3>{task.title} </h3>
 
