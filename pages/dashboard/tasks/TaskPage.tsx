@@ -4,6 +4,7 @@ import { useMutation, useQuery } from "react-query";
 import { isArray } from "lodash";
 import { TaskTile } from "@/components/molecules";
 import { Skeleton } from "@mantine/core";
+import {orderBy} from "lodash"
 
 import Layout from "@/components/organism/layout/Layout";
 import { Header } from "@/components/organism/header";
@@ -55,11 +56,13 @@ const TaskPage = () => {
     <Layout>
       <Header />
 
-      <section className="grid grid-cols-2 gap-4">
-        <div>
+      <section className="flex items-start ">
+        <div className="h-screen w-1/3">
           {fetchingTasks ? (
             <div>
               <Skeleton height={36} />
+              <Skeleton height={36} mt={6} />
+              <Skeleton height={36} mt={6} />
               <Skeleton height={36} mt={6} />
               <Skeleton height={36} mt={6} />
             </div>
@@ -71,8 +74,9 @@ const TaskPage = () => {
                   variants={cardVariants}
                   initial="hidden"
                   animate="show"
+                  className="h-5/6 overflow-y-auto overflow-x-hidden p-4"
                 >
-                  {taskList.map((task) => (
+                  {orderBy(taskList, ["id"], ['desc']).map((task) => (
                     <motion.li
                       variants={tileVariants}
                       key={task.id}
@@ -87,7 +91,7 @@ const TaskPage = () => {
           )}
         </div>
 
-        <div>
+        <div className="card ">
           <h3> Add New Task </h3>
           <AddTaskForm onSubmit={mutate} {...{ isLoading }} />
         </div>
