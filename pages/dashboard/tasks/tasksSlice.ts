@@ -5,11 +5,7 @@ import { Task } from "@/types/task";
 const { fetchTasks } = TASK_LIST_ACTIONS;
 
 const {
-  asyncActions: {
-    init: fetchTasksInit,
-    success: fetchTasksSuccess,
-    error: fetchTasksError,
-  },
+  asyncActions: { success: fetchTasksSuccess },
 } = fetchTasks();
 
 type InitialStateType = {
@@ -25,14 +21,8 @@ export const authSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchTasksInit, (state) => {
-      state.tasks = null;
-    });
     builder.addCase(fetchTasksSuccess, (state, action: PayloadAction<[]>) => {
       state.tasks = action.payload;
-    });
-    builder.addCase(fetchTasksError, (state) => {
-      state.tasks = [];
     });
   },
 });
