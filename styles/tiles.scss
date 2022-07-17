@@ -4,6 +4,6 @@
 
 @layer components {
   .task-tile {
-    @apply flex bg-white  rounded-lg border-2 border-solid self-center p-2 my-4 w-full dark:shadow-orange-200  dark:bg-slate-800 hover:shadow-md;
+    @apply flex bg-white  rounded-lg border-2 border-solid self-center p-2 my-4 w-full dark:shadow-orange-200  dark:bg-gray-700 hover:shadow-md;
   }
 }

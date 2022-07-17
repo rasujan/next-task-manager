@@ -8,16 +8,22 @@ const TaskDetail = () => {
 
   return (
     <div>
-      <div>
-        <h3>{task?.title} </h3>
+      {Object.keys(task || {}).length ? (
+        <>
+          <div>
+            <h3>{task?.title} </h3>
 
-        <p> {task?.description}</p>
-      </div>
-      <div className="flex ">
-        <h5 className="self-center">
-          Status: <b>{task?.status}</b>
-        </h5>
-      </div>
+            <p> {task?.description}</p>
+          </div>
+          <div className="flex ">
+            <h5 className="self-center">
+              Status: <b>{task?.status}</b>
+            </h5>
+          </div>
+        </>
+      ) : (
+        <span> Select a task</span>
+      )}
     </div>
   );
 };

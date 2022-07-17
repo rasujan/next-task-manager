@@ -9,7 +9,7 @@ import { orderBy } from "lodash";
 import Layout from "@/components/organism/layout/Layout";
 import { Header } from "@/components/organism/header";
 
-import { tileVariants, cardVariants } from "./animation";
+import { tileVariants, listVariants, cardVariants } from "./animation";
 import { TASK_LIST_ACTIONS } from "./actions";
 import { getRequest, postRequest } from "store/Actions";
 import { useAppDispatch, useAppSelector } from "store/hooks";
@@ -80,7 +80,7 @@ const TaskPage = () => {
       <Header />
 
       <section className="flex items-start ">
-        <div className="w-1/2">
+        <div className="w-full max-w-xl">
           {fetchingTasks ? (
             <div>
               <Skeleton height={36} />
@@ -93,7 +93,7 @@ const TaskPage = () => {
             <React.Fragment>
               {taskList && isArray(taskList) && (
                 <motion.ul
-                  variants={cardVariants}
+                  variants={listVariants}
                   initial="hidden"
                   animate="show"
                   className="h-[80vh] overflow-y-auto overflow-x-hidden px-4"
@@ -118,15 +118,25 @@ const TaskPage = () => {
           )}
         </div>
 
-        <div className="card ">
+        <motion.div
+          className="card "
+          initial="hidden"
+          animate="visible"
+          variants={cardVariants}
+        >
           <h3> Task Detail </h3>
           <TaskDetail />
-        </div>
+        </motion.div>
 
-        <div className="card ">
+        <motion.div
+          className="card "
+          initial="hidden"
+          animate="visible"
+          variants={cardVariants}
+        >
           <h3> Add New Task </h3>
           <AddTaskForm onSubmit={mutate} {...{ isLoading }} />
-        </div>
+        </motion.div>
       </section>
     </Layout>
   );
