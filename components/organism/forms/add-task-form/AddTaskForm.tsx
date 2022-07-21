@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { TextInput, Textarea, Button } from "@mantine/core";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,9 +11,23 @@ interface propsType {
 }
 
 const AddTaskForm = ({ onSubmit, isLoading }: propsType) => {
-  const { control, handleSubmit } = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { isSubmitSuccessful },
+  } = useForm({
     resolver: yupResolver(schema),
   });
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset({
+        title: "",
+        description: "",
+      });
+    }
+  }, [reset, isSubmitSuccessful]);
 
   return (
     <div>
@@ -22,15 +36,14 @@ const AddTaskForm = ({ onSubmit, isLoading }: propsType) => {
           <Controller
             name="title"
             control={control}
+            defaultValue=""
             render={({ field, fieldState }) => (
               <TextInput
-                value={field.value}
-                onChange={field.onChange}
                 error={fieldState.error?.message}
                 label="Title"
                 radius="sm"
-                ref={field.ref}
                 id="title"
+                {...field}
               />
             )}
           />
@@ -38,15 +51,14 @@ const AddTaskForm = ({ onSubmit, isLoading }: propsType) => {
           <Controller
             name="description"
             control={control}
+            defaultValue=""
             render={({ field, fieldState }) => (
               <Textarea
-                value={field.value}
-                onChange={field.onChange}
                 error={fieldState.error?.message}
                 label="Description"
                 radius="sm"
-                ref={field.ref}
                 id="description"
+                {...field}
               />
             )}
           />

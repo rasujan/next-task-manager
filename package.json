@@ -14,7 +14,7 @@
     "@mantine/hooks": "^4.1.2",
     "@mantine/modals": "^4.1.2",
     "@mantine/next": "^4.1.2",
-    "@mantine/notifications": "^4.1.2",
+    "@mantine/notifications": "^4.2.12",
     "@reduxjs/toolkit": "^1.8.1",
     "@types/classnames": "^2.3.1",
     "@types/js-cookie": "^3.0.1",

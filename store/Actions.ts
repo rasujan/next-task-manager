@@ -73,12 +73,6 @@ function postRequest(
   extraProps?: object
 ) {
   return async (dispatch: any) => {
-    /*   const {
-      user: {
-        userResponse: { authToken = "" },
-      },
-    } = getState(); */
-
     dispatch(onInit(asyncActions));
 
     try {

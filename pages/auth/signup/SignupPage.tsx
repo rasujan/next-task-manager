@@ -12,8 +12,9 @@ import { AUTH_ACTIONS } from "../actions";
 import { postRequest } from "store/Actions";
 import { loginFieldsType } from "../types";
 import { useAppDispatch } from "store/hooks";
+import { NextPage } from "next";
 
-const LoginPage = () => {
+const LoginPage: NextPage = () => {
   const dispatch = useAppDispatch();
 
   const titleVariants = {

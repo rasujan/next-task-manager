@@ -1,19 +1,19 @@
 import React from "react";
 import Cookies from "js-cookie";
+import { NextPage } from "next";
 import { useRouter } from "next/router";
-
-import { motion } from "framer-motion";
-import { LoginForm } from "@/components/organism/forms";
-
-import Layout from "@/components/organism/layout/Layout";
-import { AUTH_ACTIONS } from "../actions";
-import { postRequest } from "store/Actions";
-import { loginFieldsType } from "../types";
-import { useAppDispatch } from "store/hooks";
-import { Header } from "@/components/organism/header";
 import { useMutation } from "react-query";
+import { motion } from "framer-motion";
 
-const LoginPage = () => {
+import { LoginForm } from "@/components/organism/forms";
+import Layout from "@/components/organism/layout/Layout";
+import { Header } from "@/components/organism/header";
+import { postRequest } from "store/Actions";
+import { useAppDispatch } from "store/hooks";
+import { loginFieldsType } from "../types";
+import { AUTH_ACTIONS } from "../actions";
+
+const LoginPage: NextPage = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 

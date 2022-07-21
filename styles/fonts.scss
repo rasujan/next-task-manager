@@ -3,9 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  div {
-    @apply text-gray-800 dark:text-gray-200;
-  }
   h1 {
     @apply text-3xl;
   }

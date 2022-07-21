@@ -1,20 +1,10 @@
 import axios from "axios";
 
-// import { AUTH_ACTIONS } from "pages/auth/actionTypes";
-
-export function setupAxios(store: any) {
+export function setupAxios() {
   axios.interceptors.response.use(undefined, (error) => {
-    // const { logout, maxReqExceedTrue } = AUTH_ACTIONS;
-
-    /* const {
-      auth: { user },
-    } = store.getState(); */
-
     const statusCode = error.response ? error.response.status : null;
 
     if (Number(statusCode) === 401) {
-      //   store.dispatch({ type: logout });
-      //   import { useRouter } from "next/router";
       window.location.href = "/";
     }
 

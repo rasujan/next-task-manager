@@ -1,10 +1,11 @@
 /* eslint no-useless-catch: "off" */
 import { instance as axios } from "./axios-setup";
 import Cookies from "js-cookie";
+import { AxiosError } from "axios";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-export default class CMSApi {
+export default class AppApi {
   cookieToken = Cookies.get("authToken");
 
   get = async (url: string, token: string) => {
@@ -37,6 +38,7 @@ export default class CMSApi {
 
       return data;
     } catch (e) {
+      e as AxiosError;
       throw e;
     }
   };
@@ -75,11 +77,11 @@ export default class CMSApi {
     }
   };
 
-  delete = async (url: string, token: string) => {
+  delete = async (url: string) => {
     const finalConfig = {
       ...{},
       headers: {
-        "X-User-Token": token || "",
+        Authorization: `Bearer ${this.cookieToken || ""}`,
       },
     };
 
