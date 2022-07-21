@@ -1,14 +1,28 @@
 // For the task list wrapper card
-export const cardVariants = {
+export const listVariants = {
   hidden: { scale: 0 },
   show: {
     scale: 1,
     transition: {
       type: "spring",
       duration: 1,
-      delayChildren: 0.5,
+      delayChildren: 0.25,
       staggerChildren: 0.25,
       when: "beforeChildren",
+    },
+  },
+};
+
+export const cardVariants = {
+  hidden: {
+    scale: 0,
+  },
+  visible: {
+    scale: 1,
+    transition: {
+      type: "spring",
+      duration: 1,
+      bounce: 0.5,
     },
   },
 };

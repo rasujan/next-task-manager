@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import Cookies from "js-cookie";
 import { setTheme, toggleTheme } from "pages/auth/actions";
@@ -40,9 +40,9 @@ const Header = () => {
       initial="hidden"
       animate="visible"
       variants={titleVariants}
-      className="px-4 py-2 mb-8 rounded-lg shadow-lg flex justify-between dark:shadow-orange-200 dark:bg-slate-900"
+      className="px-4 py-2 mb-8 rounded-lg shadow-md flex justify-between dark:shadow-orange-200 dark:bg-slate-800"
     >
-      <h1>@rasujan - Task Manager</h1>
+      <span>@rasujan - Task Manager</span>
 
       <Switch title="Dark" checked={isDark} onChange={handleToggleTheme} />
     </motion.div>

@@ -8,11 +8,7 @@ const Home: NextPage = () => {
     router.replace("/auth/login");
   }, [router]);
 
-  return (
-    <div>
-      <h1 className="text-3xl font-bold underline"> Task Manager</h1>
-    </div>
-  );
+  return <div></div>;
 };
 
 export default Home;

@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Cookies from "js-cookie";
+import { NextPage } from "next";
 import { useRouter } from "next/router";
-
+import { useMutation } from "react-query";
 import { motion } from "framer-motion";
+
 import { LoginForm } from "@/components/organism/forms";
-
 import Layout from "@/components/organism/layout/Layout";
-import { AUTH_ACTIONS } from "../actions";
-import { postRequest } from "store/Actions";
-import { loginFieldsType } from "../types";
-import { useAppDispatch } from "store/hooks";
 import { Header } from "@/components/organism/header";
+import { postRequest } from "store/Actions";
+import { useAppDispatch } from "store/hooks";
+import { loginFieldsType } from "../types";
+import { AUTH_ACTIONS } from "../actions";
 
-const LoginPage = () => {
+const LoginPage: NextPage = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -52,6 +53,8 @@ const LoginPage = () => {
     }
   };
 
+  const { mutate, isLoading } = useMutation(handleLogin);
+
   return (
     <Layout>
       <Header />
@@ -62,9 +65,7 @@ const LoginPage = () => {
           variants={cardVariants}
           className="card"
         >
-          <motion.h1>
-            <LoginForm onSubmit={handleLogin} />
-          </motion.h1>
+          <LoginForm onSubmit={mutate} {...{ isLoading }} />
         </motion.div>
       </div>
     </Layout>

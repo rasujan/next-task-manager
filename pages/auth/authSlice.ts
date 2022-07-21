@@ -5,7 +5,7 @@ import { AUTH_ACTIONS, toggleTheme, setTheme } from "./actions";
 const { login } = AUTH_ACTIONS;
 
 const {
-  asyncActions: { init: loginInit, success: loginSuccess, error: loginError },
+  asyncActions: { success: loginSuccess },
 } = login();
 
 type InitialState = {
@@ -27,19 +27,10 @@ export const authSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(loginInit, (state) => {
-      state.loading = true;
-    });
     builder.addCase(loginSuccess, (state, action: PayloadAction<object>) => {
       state.loading = false;
       state.user = action.payload;
       state.error = "";
-    });
-    builder.addCase(loginError, (state, action: any) => {
-      state.loading = false;
-      state.user = {};
-      state.error =
-        action.error?.response?.data.message || "something went wrong";
     });
     builder.addCase(toggleTheme, (state) => {
       state.darkMode = !state.darkMode;

@@ -2,47 +2,40 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TASK_LIST_ACTIONS } from "./actions";
 import { Task } from "@/types/task";
 
-const { fetchTasks } = TASK_LIST_ACTIONS;
+const { fetchTasks, fetchTaskDetail } = TASK_LIST_ACTIONS;
 
 const {
-  asyncActions: {
-    init: fetchTasksInit,
-    success: fetchTasksSuccess,
-    error: fetchTasksError,
-  },
+  asyncActions: { success: fetchTasksSuccess },
 } = fetchTasks();
 
+const {
+  asyncActions: { success: fetchTaskDetailSuccess },
+} = fetchTaskDetail();
+
 type InitialStateType = {
-  loading: boolean;
-  tasks: Array<Task> | [];
-  error: string;
+  tasks: Array<Task> | [] | null;
+  taskDetail: Task | null;
 };
 
 const initialState: InitialStateType = {
-  loading: false,
-  tasks: [],
-  error: "",
+  tasks: null,
+  taskDetail: null,
 };
 
 export const authSlice = createSlice({
-  name: "auth",
+  name: "TaskList",
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchTasksInit, (state) => {
-      state.loading = true;
-    });
     builder.addCase(fetchTasksSuccess, (state, action: PayloadAction<[]>) => {
-      state.loading = false;
       state.tasks = action.payload;
-      state.error = "";
     });
-    builder.addCase(fetchTasksError, (state, action: any) => {
-      state.loading = false;
-      state.tasks = [];
-      state.error =
-        action.error?.response?.data.message || "something went wrong";
-    });
+    builder.addCase(
+      fetchTaskDetailSuccess,
+      (state, action: PayloadAction<Task>) => {
+        state.taskDetail = action.payload;
+      }
+    );
   },
 });
 
